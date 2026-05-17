@@ -39,6 +39,61 @@ require_webview_entrypoint() {
     [ -f "$webview_index" ] || error "Missing webview entrypoint: $webview_index. Upstream ASAR layout may have changed."
 }
 
+patch_webview_index_for_linux() {
+    local webview_index="$1"
+
+    [ -f "$webview_index" ] || error "Missing webview entrypoint: $webview_index. Upstream ASAR layout may have changed."
+
+    # Replace transparent startup background with an opaque color for Linux.
+    # The upstream app relies on macOS vibrancy for the transparent effect;
+    # on Linux the transparent background causes flickering.
+    sed -i 's/--startup-background: transparent/--startup-background: #1e1e1e/' "$webview_index"
+
+    if grep -q 'codex-linux-opaque-shell-fix' "$webview_index"; then
+        return
+    fi
+
+    # The bundled CSS later resets Electron body and sidebar surfaces back to
+    # transparent. Keep Linux Electron shells opaque so the desktop behind the
+    # window cannot bleed through the left navigation.
+    local style_fragment="$WORK_DIR/codex-linux-opaque-shell-fix.html"
+    local patched_index="$WORK_DIR/webview-index.html"
+    cat > "$style_fragment" <<'EOF'
+    <style id="codex-linux-opaque-shell-fix">
+      html[data-codex-window-type="electron"][data-codex-os="linux"],
+      html[data-codex-window-type="electron"][data-codex-os="linux"] body,
+      html[data-codex-window-type="electron"][data-codex-os="linux"] #root {
+        background: var(--color-token-side-bar-background, var(--color-background-surface-under, #f7f7f7)) !important;
+        background-color: var(--color-token-side-bar-background, var(--color-background-surface-under, #f7f7f7)) !important;
+      }
+
+      html[data-codex-window-type="electron"][data-codex-os="linux"] .app-shell-left-panel {
+        background: var(--color-token-side-bar-background, var(--color-background-surface-under, #f7f7f7)) !important;
+        background-color: var(--color-token-side-bar-background, var(--color-background-surface-under, #f7f7f7)) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+    </style>
+EOF
+
+    if awk -v fragment="$style_fragment" '
+        /<\/head>/ && !inserted {
+            while ((getline line < fragment) > 0) {
+                print line
+            }
+            close(fragment)
+            inserted = 1
+        }
+        { print }
+        END { exit inserted ? 0 : 1 }
+    ' "$webview_index" > "$patched_index"; then
+        mv "$patched_index" "$webview_index"
+    else
+        rm -f "$patched_index"
+        warn "Could not find </head> in webview index — skipping Linux opaque shell CSS patch"
+    fi
+}
+
 # ---- Extract webview files ----
 extract_webview() {
     local app_dir="$1"
@@ -50,11 +105,7 @@ extract_webview() {
 
     cp -a "$asar_extracted/webview/." "$INSTALL_DIR/content/webview/"
     require_webview_entrypoint
-
-    # Replace transparent startup background with an opaque color for Linux.
-    # The upstream app relies on macOS vibrancy for the transparent effect;
-    # on Linux the transparent background causes flickering.
-    sed -i 's/--startup-background: transparent/--startup-background: #1e1e1e/' "$INSTALL_DIR/content/webview/index.html"
+    patch_webview_index_for_linux "$INSTALL_DIR/content/webview/index.html"
     replace_linux_webview_icon_assets
     info "Webview files copied"
 }
