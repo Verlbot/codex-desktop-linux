@@ -133,6 +133,16 @@ async function reconcileUpstreamDmgIssue({ github, repo, decision, currentHttpId
     return { action: "ignored-stale-candidate" };
   }
 
+  // Public forks can deliberately disable GitHub Issues. In that case the
+  // acceptance job should report the rejected DMG without turning issue
+  // reconciliation itself into a second, misleading workflow failure.
+  if (github.rest.repos?.get) {
+    const repository = await github.rest.repos.get(repo);
+    if (repository.data?.has_issues === false) {
+      return { action: "skipped-issues-disabled" };
+    }
+  }
+
   const issues = await listTrackingIssues(github, repo);
 
   if (decision.verdict === "accepted" || decision.verdict === "accepted_with_warnings") {

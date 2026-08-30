@@ -135,6 +135,23 @@ test("does not mutate issues for stale or inconclusive runs", async () => {
   }
 });
 
+test("skips reconciliation when repository issues are disabled", async () => {
+  const fixture = fakeGithub();
+  fixture.github.rest.repos = {
+    get: async () => ({ data: { has_issues: false } }),
+  };
+
+  const result = await reconcileUpstreamDmgIssue({
+    github: fixture.github,
+    repo: { owner: "o", repo: "r" },
+    decision: decision("rejected", "0".repeat(64)),
+    currentHttpIdentityKey: "current",
+  });
+
+  assert.equal(result.action, "skipped-issues-disabled");
+  assert.equal(fixture.calls.length, 0);
+});
+
 test("does not mutate accepted or rejected issues when either HTTP identity is missing", async () => {
   for (const verdict of ["accepted", "rejected"]) {
     for (const missing of ["expected", "current"]) {
