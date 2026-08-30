@@ -703,9 +703,9 @@ impl Dispatch<zcosmic_toplevel_handle_v1::ZcosmicToplevelHandleV1, ()> for AppDa
                 record.focused = false;
                 record.hidden = false;
                 for value in state.as_chunks::<4>().0 {
-                    if let Ok(parsed) = zcosmic_toplevel_handle_v1::State::try_from(
-                        u32::from_ne_bytes(*value),
-                    ) {
+                    if let Ok(parsed) =
+                        zcosmic_toplevel_handle_v1::State::try_from(u32::from_ne_bytes(*value))
+                    {
                         if parsed == zcosmic_toplevel_handle_v1::State::Activated {
                             record.focused = true;
                         }
