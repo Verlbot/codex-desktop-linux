@@ -1,3 +1,5 @@
+> Historical reference for the retired fork. The workflows described below are disabled. See [migration guidance](../README.md).
+
 # Issue and pull request label governance
 
 Repository labels are a maintainer-owned triage layer. They give people a
@@ -219,7 +221,7 @@ short description for accessibility, search, and API consumers.
 
 ## Safe synchronization and migration
 
-The manual [Manage repository labels](../.github/workflows/manage-labels.yml)
+The manual [Manage repository labels](retired-workflows/manage-labels.yml)
 workflow is the only repository-supplied bulk mutation path. It checks out the
 trusted default branch even if another ref is selected in the dispatch UI.
 Only a user with the repository permission required to run the workflow can

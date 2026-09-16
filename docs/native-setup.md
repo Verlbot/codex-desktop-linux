@@ -1,3 +1,5 @@
+> This fork is retired. This document is retained as historical reference; maintenance, builds, feature updates, and contributions have ended. See [migration guidance](../README.md).
+
 # Native Setup
 
 This project has two native install entrypoints:

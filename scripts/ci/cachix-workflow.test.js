@@ -4,11 +4,11 @@ const path = require("node:path");
 const test = require("node:test");
 
 const workflow = fs.readFileSync(
-  path.resolve(__dirname, "../../.github/workflows/cachix.yml"),
+  path.resolve(__dirname, "../../docs/retired-workflows/cachix.yml"),
   "utf8",
 );
 const updateHashWorkflow = fs.readFileSync(
-  path.resolve(__dirname, "../../.github/workflows/update-codex-hash.yml"),
+  path.resolve(__dirname, "../../docs/retired-workflows/update-codex-hash.yml"),
   "utf8",
 );
 

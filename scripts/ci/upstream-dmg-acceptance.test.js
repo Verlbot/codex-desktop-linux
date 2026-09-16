@@ -201,7 +201,7 @@ test("HTTP identity requires an ETag or Last-Modified plus Content-Length", () =
 
 test("upstream workflow concurrency is isolated per PR or ref", () => {
   const workflow = fs.readFileSync(
-    path.resolve(__dirname, "../../.github/workflows/upstream-build-app.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/upstream-build-app.yml"),
     "utf8",
   );
   assert.match(workflow, /cron: '30 \* \* \* \*'/);
@@ -219,7 +219,7 @@ test("upstream workflow concurrency is isolated per PR or ref", () => {
 
 test("Nix refresh serializes campaigns and deduplicates refresh and exact-head CI", () => {
   const workflow = fs.readFileSync(
-    path.resolve(__dirname, "../../.github/workflows/update-codex-hash.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/update-codex-hash.yml"),
     "utf8",
   );
 
@@ -246,11 +246,11 @@ test("Nix hash refresh accepts a validated focused output override", () => {
     "utf8",
   );
   const workflow = fs.readFileSync(
-    path.resolve(__dirname, "../../.github/workflows/ci.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/ci.yml"),
     "utf8",
   );
   const refreshWorkflow = fs.readFileSync(
-    path.resolve(__dirname, "../../.github/workflows/update-codex-hash.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/update-codex-hash.yml"),
     "utf8",
   );
   const watchdogProfile = JSON.parse(fs.readFileSync(
