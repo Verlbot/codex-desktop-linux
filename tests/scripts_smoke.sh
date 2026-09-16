@@ -3090,7 +3090,7 @@ test_fedora_dependency_bootstrap_installs_rpmbuild() {
     info "Checking Fedora dependency bootstrap includes rpmbuild and C++ build tools"
     local install_deps="$REPO_DIR/scripts/install-deps.sh"
     local helper="$REPO_DIR/scripts/lib/install-helpers.sh"
-    local readme="$REPO_DIR/README.md"
+    local readme="$REPO_DIR/LEGACY.md"
 
     awk '/^install_dnf5\(\) \{/,/^}/' "$install_deps" | grep -q -- "rpm-build" \
         || fail "install_dnf5 must install rpm-build for rpmbuild"
