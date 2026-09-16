@@ -9,7 +9,7 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 const repositoryRoot = path.resolve(__dirname, "../..");
 const workflowPath = path.join(
   repositoryRoot,
-  ".github/workflows/computer-use-sync-reminder.yml",
+  "docs/retired-workflows/computer-use-sync-reminder.yml",
 );
 const policy = require(path.join(repositoryRoot, ".github/labels.json"));
 

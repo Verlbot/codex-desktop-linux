@@ -4,7 +4,7 @@ const path = require("node:path");
 const test = require("node:test");
 
 const repoRoot = path.resolve(__dirname, "../..");
-const workflowsDir = path.join(repoRoot, ".github/workflows");
+const workflowsDir = path.join(repoRoot, "docs/retired-workflows");
 
 const approvedNode24Actions = new Set([
   "actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",

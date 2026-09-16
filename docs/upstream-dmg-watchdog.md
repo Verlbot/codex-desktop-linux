@@ -1,3 +1,5 @@
+> This fork is retired. This document is retained as historical reference; maintenance, builds, feature updates, and contributions have ended. See [migration guidance](../README.md).
+
 # Upstream DMG watchdog
 
 The local watchdog turns each upstream DMG SHA-256 into one persistent campaign:

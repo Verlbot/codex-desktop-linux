@@ -411,7 +411,7 @@ test("writeSnapshot uses private permissions and never overwrites an audit snaps
 
 test("label management workflow keeps writes manual, trusted, and snapshotted", async () => {
   const workflow = await fs.readFile(
-    path.resolve(__dirname, "../../.github/workflows/manage-labels.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/manage-labels.yml"),
     "utf8",
   );
   assert.match(workflow, /workflow_dispatch:/);

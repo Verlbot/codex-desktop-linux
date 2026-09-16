@@ -277,8 +277,8 @@ plus a native package plus `codex-update-manager`.
 - `scripts/ci-local.sh`
   Local containerized CI runner. Targets include `pr`, `all`, `core`, `deb`,
   `rpm`, `pacman`, `install-deps[:image]`, `nix`, and `upstream`.
-- `.github/workflows/`
-  GitHub Actions for CI, upstream app builds, install-deps, Cachix, Nix hash
+- `docs/retired-workflows/`
+  Inert historical GitHub Actions definitions for CI, upstream app builds, install-deps, Cachix, Nix hash
   refreshes, and Computer Use sync reminders.
 
 ## Docs

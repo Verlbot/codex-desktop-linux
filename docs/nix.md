@@ -1,3 +1,5 @@
+> This fork is retired. This document is retained as historical reference; maintenance, builds, feature updates, and contributions have ended. See [migration guidance](../README.md).
+
 # Nix
 
 Run ChatGPT Desktop for Linux directly with:

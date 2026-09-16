@@ -454,7 +454,7 @@ test("enforcePullRequestLimits retries closing before failing", async () => {
 
 test("workflow uses the trusted pull_request_target configuration", () => {
   const workflow = fs.readFileSync(
-    path.resolve(__dirname, "../../.github/workflows/contributor-pr-limit.yml"),
+    path.resolve(__dirname, "../../docs/retired-workflows/contributor-pr-limit.yml"),
     "utf8",
   );
 
